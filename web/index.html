@@ -14,13 +14,31 @@
     button{cursor:pointer;background:#111;color:white;border:0}.row{display:flex;gap:10px;flex-wrap:wrap;margin-top:18px}
     #screen{width:100%;margin-top:20px;background:#111;border-radius:16px;display:none;touch-action:none}
     #status{margin-top:14px}.code{font-size:32px;font-weight:700;letter-spacing:5px}
+    .install{margin-top:28px;padding-top:24px;border-top:1px solid #eee}
+    .install h2{margin:0 0 6px;font-size:24px}
+    .download{display:inline-block;margin-top:14px;text-decoration:none;background:#111;color:white;border-radius:12px;padding:12px 16px;font-weight:600}
+    .steps{margin:14px 0 0;padding-left:22px;color:#555;line-height:1.7}
   </style>
 </head>
 <body><main><div class="card">
   <h1>Linko</h1><div class="muted">Your computer. Wherever you are.</div>
+
   <div class="row"><input id="code" inputmode="numeric" maxlength="6" placeholder="Pairing code"><button id="connect">Connect</button></div>
   <div id="status" class="muted">Enter the 6-digit code shown by Linko.exe.</div>
   <canvas id="screen"></canvas>
+
+  <section class="install">
+    <h2>Get Linko for Windows</h2>
+    <div class="muted">Install Linko.exe on the computer you want to control remotely.</div>
+    <a class="download" href="https://github.com/DeepVoid88Chess/Linko/releases/latest/download/Linko.exe">Download Linko.exe</a>
+    <ol class="steps">
+      <li>Download and run <strong>Linko.exe</strong> on your Windows PC.</li>
+      <li>Enter your Linko server address when asked.</li>
+      <li>Linko will show you a 6-digit pairing code.</li>
+      <li>Enter that code above on your iPad or other device.</li>
+      <li>Approve the remote-control request on your Windows PC.</li>
+    </ol>
+  </section>
 </div></main>
 <script>
 const codeEl=document.querySelector('#code'), statusEl=document.querySelector('#status'), canvas=document.querySelector('#screen'), ctx=canvas.getContext('2d');
