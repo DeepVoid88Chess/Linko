@@ -1,0 +1,79 @@
+<!doctype html>
+<html lang="en">
+<head>
+  <meta charset="utf-8">
+  <meta name="viewport" content="width=device-width,initial-scale=1">
+  <title>Install Linko</title>
+  <style>
+    :root { color-scheme: dark; }
+    * { box-sizing: border-box; }
+    body {
+      margin: 0;
+      min-height: 100vh;
+      display: grid;
+      place-items: center;
+      font-family: Inter, system-ui, -apple-system, BlinkMacSystemFont, "Segoe UI", sans-serif;
+      background: #0b0d12;
+      color: #f5f7fb;
+    }
+    main {
+      width: min(680px, calc(100% - 32px));
+      padding: 42px 32px;
+      border: 1px solid #252a35;
+      border-radius: 24px;
+      background: #11141b;
+      text-align: center;
+      box-shadow: 0 24px 70px rgba(0,0,0,.35);
+    }
+    .logo { font-size: 42px; font-weight: 800; letter-spacing: -2px; }
+    .byline { color: #9da6b7; margin-top: 4px; }
+    h1 { margin: 34px 0 10px; font-size: 32px; }
+    p { color: #b7bfce; line-height: 1.6; }
+    .download {
+      display: inline-block;
+      margin: 22px 0 12px;
+      padding: 14px 24px;
+      border-radius: 12px;
+      background: #f5f7fb;
+      color: #11141b;
+      text-decoration: none;
+      font-weight: 750;
+    }
+    .download:hover { opacity: .9; }
+    .steps {
+      margin-top: 28px;
+      padding: 20px;
+      border-radius: 16px;
+      background: #0c0f15;
+      text-align: left;
+    }
+    .steps div { margin: 10px 0; }
+    .note { font-size: 13px; color: #7f899b; margin-top: 22px; }
+    code { color: #e5e9f1; }
+  </style>
+</head>
+<body>
+  <main>
+    <div class="logo">Linko</div>
+    <div class="byline">by Donaro Inc.</div>
+
+    <h1>Install Linko for Windows</h1>
+    <p>Linko lets you securely control your own Windows PC from your iPad or another device.</p>
+
+    <a class="download" href="https://github.com/DeepVoid88Chess/Linko/releases/latest/download/Linko.exe">
+      Download Linko.exe
+    </a>
+
+    <div class="steps">
+      <strong>Quick start</strong>
+      <div>1. Download and run <code>Linko.exe</code>.</div>
+      <div>2. Enter your Linko server address.</div>
+      <div>3. Linko shows a six-digit pairing code.</div>
+      <div>4. Open Linko on your iPad and enter the code.</div>
+      <div>5. Confirm remote control locally on the Windows PC.</div>
+    </div>
+
+    <p class="note">The download becomes available after the first Linko version is published on GitHub.</p>
+  </main>
+</body>
+</html>
