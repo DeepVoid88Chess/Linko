@@ -82,22 +82,14 @@ static async Task SendFramesAsync(ClientWebSocket socket, CancellationToken toke
             using var stream = new MemoryStream();
             var encoder = GetJpegEncoder();
             using var parameters = new EncoderParameters(1);
-            parameters.Param[0] = new EncoderParameter(Encoder.Quality, JpegQuality);
+            parameters.Param[0] = new EncoderParameter(System.Drawing.Imaging.Encoder.Quality, JpegQuality);
             bitmap.Save(stream, encoder, parameters);
 
-            await socket.SendAsync(
-                new ArraySegment<byte>(stream.ToArray()),
-                WebSocketMessageType.Binary,
-                true,
-                token);
-
+            await socket.SendAsync(new ArraySegment<byte>(stream.ToArray()), WebSocketMessageType.Binary, true, token);
             await Task.Delay(FrameIntervalMs, token);
         }
         catch (OperationCanceledException) { break; }
-        catch
-        {
-            await Task.Delay(500, token);
-        }
+        catch { await Task.Delay(500, token); }
     }
 }
 
@@ -114,18 +106,13 @@ static async Task ReceiveCommandsAsync(ClientWebSocket socket, CancellationToken
             do
             {
                 result = await socket.ReceiveAsync(new ArraySegment<byte>(buffer), token);
-                if (result.MessageType == WebSocketMessageType.Close)
-                    return;
-                if (result.Count > 0)
-                    message.Write(buffer, 0, result.Count);
+                if (result.MessageType == WebSocketMessageType.Close) return;
+                if (result.Count > 0) message.Write(buffer, 0, result.Count);
             }
             while (!result.EndOfMessage);
 
-            if (result.MessageType != WebSocketMessageType.Text)
-                continue;
-
-            var text = Encoding.UTF8.GetString(message.ToArray());
-            HandleCommand(text);
+            if (result.MessageType == WebSocketMessageType.Text)
+                HandleCommand(Encoding.UTF8.GetString(message.ToArray()));
         }
         catch (OperationCanceledException) { break; }
         catch { }
@@ -139,33 +126,21 @@ static void HandleCommand(string text)
         using var json = JsonDocument.Parse(text);
         var root = json.RootElement;
         if (!root.TryGetProperty("type", out var typeElement)) return;
+        if (!string.Equals(typeElement.GetString(), "mouse", StringComparison.OrdinalIgnoreCase)) return;
 
-        if (!string.Equals(typeElement.GetString(), "mouse", StringComparison.OrdinalIgnoreCase))
-            return;
-
-        var action = root.TryGetProperty("action", out var actionElement)
-            ? actionElement.GetString()
-            : null;
+        var action = root.TryGetProperty("action", out var actionElement) ? actionElement.GetString() : null;
         var x = root.TryGetProperty("x", out var xElement) ? xElement.GetDouble() : 0.5;
         var y = root.TryGetProperty("y", out var yElement) ? yElement.GetDouble() : 0.5;
-
         x = Math.Clamp(x, 0, 1);
         y = Math.Clamp(y, 0, 1);
 
         var bounds = SystemInformation.VirtualScreen;
-        var screenX = bounds.Left + (int)Math.Round(x * Math.Max(0, bounds.Width - 1));
-        var screenY = bounds.Top + (int)Math.Round(y * Math.Max(0, bounds.Height - 1));
-        Cursor.Position = new Point(screenX, screenY);
+        Cursor.Position = new Point(
+            bounds.Left + (int)Math.Round(x * Math.Max(0, bounds.Width - 1)),
+            bounds.Top + (int)Math.Round(y * Math.Max(0, bounds.Height - 1)));
 
-        switch (action)
-        {
-            case "down":
-                MouseButton(true);
-                break;
-            case "up":
-                MouseButton(false);
-                break;
-        }
+        if (action == "down") MouseButton(true);
+        else if (action == "up") MouseButton(false);
     }
     catch { }
 }
@@ -188,8 +163,7 @@ static Bitmap CaptureScreen()
 
 static ImageCodecInfo GetJpegEncoder()
 {
-    return ImageCodecInfo.GetImageEncoders()
-        .First(codec => codec.FormatID == ImageFormat.Jpeg.Guid);
+    return ImageCodecInfo.GetImageEncoders().First(codec => codec.FormatID == ImageFormat.Jpeg.Guid);
 }
 
 [DllImport("user32.dll", SetLastError = true)]
