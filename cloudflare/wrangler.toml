@@ -1,0 +1,12 @@
+name = "linko"
+main = "src/index.js"
+compatibility_date = "2026-09-05"
+
+[durable_objects]
+bindings = [
+  { name = "LINKO_SESSIONS", class_name = "LinkoSession" }
+]
+
+[[migrations]]
+tag = "v1"
+new_sqlite_classes = ["LinkoSession"]
