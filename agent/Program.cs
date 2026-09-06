@@ -9,8 +9,8 @@ using System.Windows.Forms;
 const long JpegQuality = 55L;
 const int FrameIntervalMs = 100;
 
-// Set this to the public Linko Worker/site URL once it is deployed.
-const string LinkoServerUrl = "https://YOUR-LINKO-SERVER.example";
+// Public Linko Worker URL.
+const string LinkoServerUrl = "https://linko.jacksonbickleythomas.workers.dev";
 
 ApplicationConfiguration.Initialize();
 Application.Run(new LinkoForm());
@@ -112,7 +112,7 @@ public sealed class LinkoForm : Form
         try
         {
             if (!Uri.TryCreate(LinkoServerUrl, UriKind.Absolute, out var baseUri))
-                throw new InvalidOperationException("Linko's server address has not been configured yet.");
+                throw new InvalidOperationException("Linko's server address is invalid.");
 
             using var http = new HttpClient();
             using var response = await http.PostAsync(new Uri(baseUri, "/api/pair"), null);
