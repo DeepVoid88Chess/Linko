@@ -34,7 +34,7 @@ export default {
       return env.LINKO_SESSIONS.get(id).fetch(request);
     }
 
-    return new Response("Linko API", { headers: { "content-type": "text/plain" } });
+    return env.ASSETS.fetch(request);
   }
 };
 
