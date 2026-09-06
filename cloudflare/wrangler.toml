@@ -2,6 +2,10 @@ name = "linko"
 main = "src/index.js"
 compatibility_date = "2026-09-05"
 
+[assets]
+directory = "../web"
+binding = "ASSETS"
+
 [durable_objects]
 bindings = [
   { name = "LINKO_SESSIONS", class_name = "LinkoSession" }
