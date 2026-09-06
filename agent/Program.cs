@@ -7,6 +7,7 @@ using System.Runtime.InteropServices;
 using System.Text;
 using System.Text.Json;
 
+const string LinkoVersion = "0.2-console";
 const long JpegQuality = 55L;
 const int FrameIntervalMs = 100;
 const string LinkoServerUrl = "https://linko.jacksonbickleythomas.workers.dev";
@@ -14,6 +15,7 @@ const string LinkoServerUrl = "https://linko.jacksonbickleythomas.workers.dev";
 Console.Title = "Linko";
 Console.WriteLine("Linko");
 Console.WriteLine("Your computer. Wherever you are.");
+Console.WriteLine($"Version {LinkoVersion}");
 Console.WriteLine();
 Console.WriteLine("Connecting to Linko...");
 
@@ -39,6 +41,7 @@ catch (Exception ex)
 
 Console.Clear();
 Console.WriteLine("Linko");
+Console.WriteLine($"Version {LinkoVersion}");
 Console.WriteLine("================================");
 Console.WriteLine();
 Console.WriteLine($"PAIRING CODE: {pairingCode.Insert(3, " ")}");
@@ -64,6 +67,7 @@ try
     Console.WriteLine("Connecting to your iPad...");
     await socket.ConnectAsync(wsUri, cts.Token);
     Console.WriteLine("Connected. Remote control is active.");
+    Console.WriteLine("Screen streaming is active.");
     Console.WriteLine("Press Ctrl+C to stop Linko.");
 
     Console.CancelKeyPress += (_, e) =>
